@@ -9,7 +9,6 @@ const routes: Routes = [{ path: '', component: HomeComponent }];
   imports: [
     RouterModule.forRoot(routes, {
       onSameUrlNavigation: 'reload',
-      enableTracing: true,
     }),
   ],
   exports: [RouterModule],

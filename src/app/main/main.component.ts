@@ -5,7 +5,7 @@ import { OAuth2LoginService } from '../services/oauth2-login.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.less'],
+  styleUrls: ['./main.component.less']
 })
 export class MainComponent {
   public foo = { id: 1, name: 'sample foo' };
@@ -13,7 +13,7 @@ export class MainComponent {
 
   constructor(private service: OAuth2LoginService) {}
 
-  getFoo() {
+  getFoo(): void {
     this.service.getResource(this.foosUrl + this.foo.id).subscribe(
       (data) => (this.foo = data),
       (error) => (this.foo.name = 'Error')
