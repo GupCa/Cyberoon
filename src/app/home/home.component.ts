@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
+import { authInfo } from '../services/oauth.model';
 import { OAuth2LoginService } from '../services/oauth2-login.service';
 
 @Component({
@@ -9,23 +11,24 @@ import { OAuth2LoginService } from '../services/oauth2-login.service';
 })
 export class HomeComponent implements OnInit {
   public isLoggedIn = false;
-
-  constructor(private service: OAuth2LoginService) {}
+  constructor(
+    private service: OAuth2LoginService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.isLoggedIn = this.service.checkCredentials();
-    const i = window.location.href.indexOf('code');
-    if (!this.isLoggedIn && i !== -1) {
-      this.service.retrieveToken(window.location.href.substring(i + 5));
-    }
+    this.route.queryParams.subscribe((params) => {
+      const code = params['code'];
+
+      if (!this.isLoggedIn && code) {
+        this.service.retrieveToken(code);
+      }
+    });
   }
 
   login(): void {
-    window.location.href =
-      'http://my-test-auth-server.herokuapp.com/auth/oauth/authorize?response_type=code&scope=openid%20write%20read&client_id=' +
-      this.service.clientId +
-      '&redirect_uri=' +
-      this.service.redirectUri;
+    window.location.href = `http://my-test-auth-server.herokuapp.com/auth/oauth/authorize?response_type=code&scope=user_info&client_id=${authInfo.clientId}&redirect_uri=${authInfo.redirectUri}`;
   }
 
   logout(): void {
