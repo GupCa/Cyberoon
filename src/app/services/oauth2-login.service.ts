@@ -25,11 +25,9 @@ export class OAuth2LoginService {
     });
 
     this.http
-      .post(
-        'http://my-test-auth-server.herokuapp.com/auth/oauth/token',
-        params.toString(),
-        { headers }
-      )
+      .post('http://localhost:8080/auth/oauth/token', params.toString(), {
+        headers
+      })
       .subscribe(
         (data) => this.saveToken(data),
         (err) => console.log(err)

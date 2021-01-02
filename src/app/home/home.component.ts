@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
   }
 
   login(): void {
-    window.location.href = `http://my-test-auth-server.herokuapp.com/auth/oauth/authorize?response_type=code&scope=user_info&client_id=${authInfo.clientId}&redirect_uri=${authInfo.redirectUri}`;
+    window.location.href = `http://localhost:8080/auth/oauth/authorize?response_type=code&scope=user_info&client_id=${authInfo.clientId}&redirect_uri=${authInfo.redirectUri}`;
   }
 
   logout(): void {
