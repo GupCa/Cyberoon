@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  authApiUrl: 'http://my-test-auth-server.herokuapp.com/auth/oauth'
 };
