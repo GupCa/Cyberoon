@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { authInfo } from '../services/oauth.model';
 import { OAuth2LoginService } from '../services/oauth2-login.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -12,26 +13,26 @@ import { OAuth2LoginService } from '../services/oauth2-login.service';
 export class HomeComponent implements OnInit {
   public isLoggedIn = false;
   constructor(
-    private service: OAuth2LoginService,
+    private oAuthService: OAuth2LoginService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.service.checkCredentials();
+    this.isLoggedIn = this.oAuthService.checkCredentials();
     this.route.queryParams.subscribe((params) => {
       const code = params['code'];
 
       if (!this.isLoggedIn && code) {
-        this.service.retrieveToken(code);
+        this.oAuthService.retrieveToken(code);
       }
     });
   }
 
   login(): void {
-    window.location.href = `http://localhost:8080/auth/oauth/authorize?response_type=code&scope=user_info&client_id=${authInfo.clientId}&redirect_uri=${authInfo.redirectUri}`;
+    window.location.href = `${environment.authApiUrl}/authorize?response_type=${authInfo.responseType}&scope=${authInfo.scope}&client_id=${authInfo.clientId}&redirect_uri=${authInfo.redirectUri}`;
   }
 
   logout(): void {
-    this.service.logout();
+    this.oAuthService.logout();
   }
 }

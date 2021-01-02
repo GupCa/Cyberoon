@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { authInfo } from './oauth.model';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class OAuth2LoginService {
     });
 
     this.http
-      .post('http://localhost:8080/auth/oauth/token', params.toString(), {
+      .post(`${environment.authApiUrl}/token`, params.toString(), {
         headers
       })
       .subscribe(
