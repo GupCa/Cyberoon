@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng deploy --base-href=\"https://gupca.github.io/Cyberoon/\""
+    "deploy": "ng deploy --base-href=\"https://GupCa.github.io/Cyberoon/\" --branch=deploy"
   },
   "private": true,
   "dependencies": {
