@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   authApiUrl: 'http://my-test-auth-server.herokuapp.com/auth/oauth'
+  // authApiUrl: 'http://localhost:8080/auth/oauth'
 };
 
 /*
