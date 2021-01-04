@@ -56,6 +56,12 @@ export class OAuth2LoginService {
 
   logout(): void {
     this.cookieService.delete('access_token');
+    this.http
+      .get(`http://my-test-auth-server.herokuapp.com/auth/logout`)
+      .subscribe(
+        (data) => console.log(data),
+        (err) => console.log(err)
+      );
     window.location.reload();
   }
 }

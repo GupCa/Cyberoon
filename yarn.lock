@@ -1684,6 +1684,15 @@ alphanum-sort@^1.0.0:
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
+angular-auth-oidc-client@^11.2.0:
+  version "11.3.0"
+  resolved "https://registry.yarnpkg.com/angular-auth-oidc-client/-/angular-auth-oidc-client-11.3.0.tgz#a20d09fe270dc50b60863b2ef60636dadd83d813"
+  integrity sha512-I7liRPbC30Ml9cZE9qRi5ejiOcUIEx2/js+eC3n9H9Cs44gJ/MCLg6jLjD+JsOXW+IWS3jULtDhTeSYcMHgQgw==
+  dependencies:
+    common-tags "^1.8.0"
+    jsrsasign-reduced "^8.0.15"
+    tslib "^2.0.0"
+
 angular-cli-ghpages@^1.0.0-rc.1:
   version "1.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/angular-cli-ghpages/-/angular-cli-ghpages-1.0.0-rc.1.tgz#ecebd03f7d95f32f44178218ee23bc2fcac6a790"
@@ -2698,6 +2707,11 @@ comment-parser@^0.7.6:
   version "0.7.6"
   resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-0.7.6.tgz#0e743a53c8e646c899a1323db31f6cd337b10f12"
   integrity sha512-GKNxVA7/iuTnAqGADlTWX4tkhzxZKXp5fLJqKTlQLHkE65XDUKutZ3BHaJC5IGcper2tT3QRD1xr4o3jNpgXXg==
+
+common-tags@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.8.0.tgz#8e3153e542d4a39e9b10554434afaaf98956a937"
+  integrity sha512-6P6g0uetGpW/sdyUy/iQQCbFF0kWVMSIVSyYz7Zgjcgh8mgw8PQzDNZeyZ5DQ2gM7LBoZPHmnjz8rUthkBG5tw==
 
 commondir@^1.0.1:
   version "1.0.1"
@@ -5599,6 +5613,11 @@ jsprim@^1.2.2:
     extsprintf "1.3.0"
     json-schema "0.2.3"
     verror "1.10.0"
+
+jsrsasign-reduced@^8.0.15:
+  version "8.0.15"
+  resolved "https://registry.yarnpkg.com/jsrsasign-reduced/-/jsrsasign-reduced-8.0.15.tgz#a1b110cdbb83bc0af91e9c66bee6f62ce0c9719d"
+  integrity sha512-Ig4W69nXCIUedzOSk3nqJWUr2DmSDENYfsmCqVK33GPETtPcjwREGQc92hV5jcJ6zavMvGD4tjhZ+T7JIiaSLA==
 
 jszip@^3.1.3:
   version "3.5.0"
