@@ -28,8 +28,24 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  login(): void {
-    window.location.href = `${environment.authApiUrl}/authorize?response_type=${authInfo.responseType}&scope=${authInfo.scope}&client_id=${authInfo.clientId}&redirect_uri=${authInfo.redirectUri}`;
+  async login(): Promise<void> {
+    let url = `${environment.authApiUrl}/authorize?`;
+    const [
+      challenge,
+      verifier
+    ] = await this.oAuthService.createChallengeVerifierPairForPKCE();
+    localStorage.setItem('PKCE_verifier', verifier);
+
+    url += `response_type=${authInfo.responseType}`;
+    url += `&scope=${authInfo.scope}`;
+    // url += `&state=${authInfo.scope}`;
+    url += `&client_id=${authInfo.clientId}`;
+    url += `&redirect_uri=${authInfo.redirectUri}`;
+    // url += `&nonce=${authInfo.redirectUri}`;
+    url += `&code_challenge=${challenge}`;
+    url += '&code_challenge_method=S256';
+    window.location.href = url;
+    // this.oAuthService.get(url);
   }
 
   logout(): void {

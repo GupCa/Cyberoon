@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { MainComponent } from './main/main.component';
+import { DefaultHashHandler, HashHandler } from './services/hash-handler';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, MainComponent],
@@ -18,7 +19,7 @@ import { MainComponent } from './main/main.component';
     HttpClientModule,
     MatButtonModule
   ],
-  providers: [],
+  providers: [{ provide: HashHandler, useClass: DefaultHashHandler }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

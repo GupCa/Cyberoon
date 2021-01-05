@@ -1,13 +1,11 @@
 <div class="container">
-  <button
-    *ngIf="!isLoggedIn"
-    mat-raised-button
-    color="accent"
-    (click)="login()"
-    type="submit"
-  >
-    Login
-  </button>
+  <div *ngIf="!isLoggedIn" class="container__login">
+    <button mat-raised-button (click)="logout()" href="#">Logout</button>
+    <button mat-raised-button color="accent" (click)="login()" type="submit">
+      Login
+    </button>
+  </div>
+
   <div *ngIf="isLoggedIn" class="content">
     <button mat-raised-button (click)="logout()" href="#">Logout</button>
     <br />

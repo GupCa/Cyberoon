@@ -1,6 +1,6 @@
 export const authInfo: OAuth2 = {
   responseType: 'code',
-  scope: 'user_info',
+  scope: 'openid',
   clientId: 'web-client',
   redirectUri: 'http://localhost:8081/',
   grantType: 'authorization_code',

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 
 import { CookieService } from 'ngx-cookie-service';
 
+import { base64UrlEncode } from './base64-helper';
+import { HashHandler } from './hash-handler';
 import { authInfo } from './oauth.model';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -11,7 +13,11 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class OAuth2LoginService {
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService,
+    protected crypto: HashHandler
+  ) {}
 
   retrieveToken(code: unknown): void {
     const params = new URLSearchParams();
@@ -19,6 +25,7 @@ export class OAuth2LoginService {
     params.append('client_id', authInfo.clientId);
     params.append('client_secret', authInfo.clientSecret);
     params.append('redirect_uri', authInfo.redirectUri);
+    params.append('code_verifier', localStorage.getItem('PKCE_verifier'));
     params.append('code', code.toString());
 
     const headers = new HttpHeaders({
@@ -56,12 +63,64 @@ export class OAuth2LoginService {
 
   logout(): void {
     this.cookieService.delete('access_token');
-    this.http
-      .get(`http://my-test-auth-server.herokuapp.com/auth/logout`)
-      .subscribe(
-        (data) => console.log(data),
-        (err) => console.log(err)
+    // this.http
+    //   .get(`http://my-test-auth-server.herokuapp.com/auth/logout`)
+    //   .subscribe(
+    //     (data) => console.log(data),
+    //     (err) => console.log(err)
+    //   );
+    location.href = 'http://my-test-auth-server.herokuapp.com/auth/logout';
+  }
+
+  get(url: string) {
+    return this.http.get(url).subscribe();
+  }
+
+  async createChallengeVerifierPairForPKCE(): Promise<[string, string]> {
+    if (!this.crypto) {
+      throw new Error(
+        'PKCE support for code flow needs a CryptoHander. Did you import the OAuthModule using forRoot() ?'
       );
-    window.location.reload();
+    }
+
+    const verifier = this.createNonce();
+    const challengeRaw = await this.crypto.calcHash(verifier, 'sha-256');
+    const challenge = base64UrlEncode(challengeRaw);
+
+    return [challenge, verifier];
+  }
+
+  createNonce() {
+    /*
+     * This alphabet is from:
+     * https://tools.ietf.org/html/rfc7636#section-4.1
+     *
+     * [A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~"
+     */
+    const unreserved =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+    let size = 45;
+    let id = '';
+
+    const crypto =
+      typeof self === 'undefined' ? null : self.crypto || self['msCrypto'];
+    if (crypto) {
+      let bytes = new Uint8Array(size);
+      crypto.getRandomValues(bytes);
+
+      // Needed for IE
+      if (!bytes.map) {
+        (bytes as any).map = Array.prototype.map;
+      }
+
+      bytes = bytes.map((x) => unreserved.charCodeAt(x % unreserved.length));
+      id = String.fromCharCode.apply(null, bytes);
+    } else {
+      while (0 < size--) {
+        id += unreserved[(Math.random() * unreserved.length) | 0];
+      }
+    }
+
+    return base64UrlEncode(id);
   }
 }
