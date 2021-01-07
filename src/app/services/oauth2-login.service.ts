@@ -76,6 +76,10 @@ export class OAuth2LoginService {
     return this.http.get(url).subscribe();
   }
 
+  post(url: string, body: any, options?: any) {
+    return this.http.post(url, body, options).subscribe();
+  }
+
   async createChallengeVerifierPairForPKCE(): Promise<[string, string]> {
     if (!this.crypto) {
       throw new Error(

@@ -29,6 +29,11 @@ export class HomeComponent implements OnInit {
   }
 
   async login(): Promise<void> {
+    const formData = new FormData();
+    formData.append('username', 'admin');
+    formData.append('password', 'admin');
+    this.oAuthService.post('http://localhost:8080/auth/login', formData);
+
     let url = `${environment.authApiUrl}/authorize?`;
     const [
       challenge,
