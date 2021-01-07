@@ -73,11 +73,17 @@ export class OAuth2LoginService {
   }
 
   get(url: string) {
-    return this.http.get(url).subscribe();
+    return this.http.get(url).subscribe(
+      (data) => console.log(data),
+      (err) => console.log(err)
+    );
   }
 
   post(url: string, body: any, options?: any) {
-    return this.http.post(url, body, options).subscribe();
+    return this.http.post(url, body, options).subscribe(
+      (data) => console.log(data),
+      (err) => console.log(err)
+    );
   }
 
   async createChallengeVerifierPairForPKCE(): Promise<[string, string]> {
