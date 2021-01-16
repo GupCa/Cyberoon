@@ -1,0 +1,11 @@
+.form {
+  &__container {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+
+  &__remember-me {
+    padding: 15px 0;
+  }
+}

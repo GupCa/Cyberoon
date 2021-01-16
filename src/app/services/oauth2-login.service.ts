@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { CookieService } from 'ngx-cookie-service';
@@ -9,6 +9,8 @@ import { authInfo } from './oauth.model';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
+const apiUrl = '//localhost:8080/auth';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +20,34 @@ export class OAuth2LoginService {
     private cookieService: CookieService,
     protected crypto: HashHandler
   ) {}
+
+  login(username: string, password: string, rememberMe: boolean): void {
+    console.log('login post called');
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+    formData.append('remember-me', rememberMe ? 'on' : 'off');
+
+    this.http
+      .post(`${apiUrl}/login`, formData, {
+        observe: 'response' as 'body'
+      })
+      .subscribe(
+        (data) => {
+          console.log('success');
+          console.log(data);
+        },
+        (err: HttpErrorResponse) => {
+          if (err.url) {
+            console.warn(`REDIRECTING MANUALLY TO ${err.url}`);
+
+            window.location.replace(err.url);
+          }
+          console.log('error');
+          console.log(err);
+        }
+      );
+  }
 
   retrieveToken(code: unknown): void {
     const params = new URLSearchParams();
