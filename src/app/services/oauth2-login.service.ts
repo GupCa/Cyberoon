@@ -37,7 +37,7 @@ export class OAuth2LoginService {
           console.log('success');
           console.log(data);
         },
-        (err: HttpErrorResponse) => {
+        /*(err: HttpErrorResponse) => {
           if (err.url) {
             console.warn(`REDIRECTING MANUALLY TO ${err.url}`);
 
@@ -45,7 +45,7 @@ export class OAuth2LoginService {
           }
           console.log('error');
           console.log(err);
-        }
+        }*/
       );
   }
 
@@ -99,7 +99,7 @@ export class OAuth2LoginService {
     //     (data) => console.log(data),
     //     (err) => console.log(err)
     //   );
-    location.href = 'http://my-test-auth-server.herokuapp.com/auth/logout';
+    location.href = 'http://localhost:8080/auth/logout';
   }
 
   get(url: string) {

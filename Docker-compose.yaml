@@ -1,0 +1,6 @@
+version: "3.6"
+services:
+  cyberoon:
+    build: ./
+    ports:
+      - 8081:8081
